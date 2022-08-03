@@ -26,11 +26,11 @@ public class User {
     @Column(nullable = false, unique = true, length = 45)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(nullable = false, unique = true, length = 14)
     private String phone;
 
     @JsonIgnore //when return request by json file, the file will hide password field
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 150)
     private String password;
 
     @Column(length = 100)
