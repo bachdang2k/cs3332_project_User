@@ -9,6 +9,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_PASSWORD=password
-      - MYSQL_USER=kiendepzai
-      - MYSQL_DATABASE=car_ecommerce
+      - MYSQL_USER=user
+      - MYSQL_DATABASE=cs3332_db
+    ports:
+      - '3309:3306'
 

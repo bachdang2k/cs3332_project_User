@@ -30,7 +30,7 @@ public class User {
     private String phone;
 
     @JsonIgnore //when return request by json file, the file will hide password field
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String password;
 
     @Column(length = 100)
