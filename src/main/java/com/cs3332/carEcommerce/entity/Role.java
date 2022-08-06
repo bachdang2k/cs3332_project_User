@@ -1,21 +1,25 @@
 package com.cs3332.carEcommerce.entity;
 
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_authorities")
+@Table(name = "tbl_roles")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Authority {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 45)
-    private String authority;
+    @Enumerated(EnumType.STRING)
+    @NaturalId
+    @Column(name = "role", length = 27)
+    private RoleName roleName;
+
 }

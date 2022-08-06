@@ -1,10 +1,9 @@
 package com.cs3332.carEcommerce.services.impl;
 
 import com.cs3332.carEcommerce.entity.User;
-import com.cs3332.carEcommerce.model.API.UserModel;
-import com.cs3332.carEcommerce.model.DTO.UserDTO;
-import com.cs3332.carEcommerce.model.mapper.UserMapper;
-import com.cs3332.carEcommerce.repositories.UserRepository;
+import com.cs3332.carEcommerce.DTOmodel.DTO.UserDTO;
+import com.cs3332.carEcommerce.DTOmodel.mapper.UserMapper;
+import com.cs3332.carEcommerce.repositories.IUserRepository;
 import com.cs3332.carEcommerce.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements IUserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
 
     public List<UserDTO> getAllUser() {
         return userRepository.findAll()
@@ -35,11 +34,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
     }
 
     @Override
@@ -75,13 +69,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Boolean existingEmail(UserModel user) {
-        Optional<User> foundUser = userRepository.findByEmail(user.getEmail());
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 
-        if (foundUser.isPresent())
-            return Boolean.TRUE;
-        else
-            return Boolean.FALSE;
+    @Override
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
 }

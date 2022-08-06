@@ -1,4 +1,4 @@
-package com.cs3332.carEcommerce.model.DTO;
+package com.cs3332.carEcommerce.DTOmodel.DTO;
 
 import lombok.Data;
 

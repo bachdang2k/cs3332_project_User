@@ -1,7 +1,7 @@
-package com.cs3332.carEcommerce.model.mapper;
+package com.cs3332.carEcommerce.DTOmodel.mapper;
 
 import com.cs3332.carEcommerce.entity.User;
-import com.cs3332.carEcommerce.model.DTO.UserDTO;
+import com.cs3332.carEcommerce.DTOmodel.DTO.UserDTO;
 
 public class UserMapper {
 

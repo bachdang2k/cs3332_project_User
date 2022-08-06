@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -23,10 +25,10 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 45)
     private String lastName;
 
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(unique = true, nullable = false, length = 45)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 14)
+    @Column(unique = true, length = 14)
     private String phone;
 
     @JsonIgnore //when return request by json file, the file will hide password field
@@ -36,8 +38,19 @@ public class User {
     @Column(length = 100)
     private String avatar;
 
-    @OneToOne
-    @JoinColumn(name = "Authority_id")
-    private Authority authority;
+    //@ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable( name = "user_role",
+                joinColumns = @JoinColumn(name = "user_id"),            //primary foreign key pointer to ID field of user table (hear)
+                inverseJoinColumns = @JoinColumn(name = "role_id"))     //sub foreign key pointer to ID field of roles table (hear)
+    private Set<Role> roles = new HashSet<>();
+
+    public User(String firstName, String lastName, String email, String phone, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+    }
 
 }
