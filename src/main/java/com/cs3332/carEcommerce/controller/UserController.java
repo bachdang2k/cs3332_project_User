@@ -8,25 +8,28 @@ import com.cs3332.carEcommerce.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'AUTHOR')")
     public List<UserDTO> getListUser() {
         return userService.getAllUser();
     }
 
     //profile
     @GetMapping(path = "/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'AUTHOR')")
     public ResponseEntity<ResponseObject> getUserByID(@PathVariable Long id) {
 
         Optional<User> foundUser = userService.getUserById(id);
@@ -46,6 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('USER', 'AUTHOR')")
     public ResponseEntity<ResponseObject> updateUserByID(@RequestBody User newUser, @PathVariable Long id) {
 
         User updatedUser = userService.updateUserByID(newUser, id);
@@ -57,6 +61,7 @@ public class UserController {
 
     //profile
     @PutMapping("/{email}")
+    @PreAuthorize("hasAnyAuthority('USER', 'AUTHOR')")
     public ResponseEntity<ResponseObject> updateUserByEmail(@RequestBody User newUser, @PathVariable String email) {
 
         User updatedUser = userService.updateUserByEmail(newUser, email);
