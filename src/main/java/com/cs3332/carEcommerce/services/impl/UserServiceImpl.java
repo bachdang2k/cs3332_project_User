@@ -6,6 +6,7 @@ import com.cs3332.carEcommerce.DTOmodel.mapper.UserMapper;
 import com.cs3332.carEcommerce.repositories.IUserRepository;
 import com.cs3332.carEcommerce.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<UserDTO> getAllUser() {
         return userRepository.findAll()
@@ -46,7 +50,8 @@ public class UserServiceImpl implements IUserService {
                     user.setEmail(newUser.getEmail());
                     user.setPhone(newUser.getPhone());
                     user.setAvatar(newUser.getAvatar());
-                    return userRepository.save(newUser);
+                    user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+                    return userRepository.save(user);
                 }).orElseGet(() -> {
                     newUser.setId(id);
                     return userRepository.save(newUser);
@@ -61,6 +66,7 @@ public class UserServiceImpl implements IUserService {
                     user.setLastName(newUser.getLastName());
                     user.setPhone(newUser.getPhone());
                     user.setAvatar(newUser.getAvatar());
+                    user.setPassword(passwordEncoder.encode(newUser.getPassword()));
                     return userRepository.save(newUser);
                 }).orElseGet(() -> {
                     newUser.setEmail(email);

@@ -22,16 +22,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("api/auth")
 public class AuthController {
 
@@ -89,45 +87,17 @@ public class AuthController {
         }
     }
 
-//    @PostMapping("/sign-in") //security login API
-//    public ResponseEntity<JwtResponse> login(@RequestBody SignInForm signInForm) throws Exception {
-//
-//        Authentication authentication;
-//
-//        UserDTO userDTO = new UserDTO();
-//        String token;
-//        //UserPrincipal userPrincipal;
-//
-//        try {
-//
-//            authentication = authenticationManager.authenticate( //Authentication: Interface
-//                    new UsernamePasswordAuthenticationToken(signInForm.getEmail(), signInForm.getPassword())); //design a simple presentation of a username and password for Authentication Object.
-//
-//            SecurityContextHolder.getContext().setAuthentication(authentication); //set the resulting Authentication object into the current Security Context.
-//            token = jwtProvider.createToken(authentication);
-//            //userPrincipal = (UserPrincipal) authentication.getPrincipal();
-//
-//            userDTO = UserMapper.toUserDTO(userService.getUserByEmail(signInForm.getEmail()).get());
-//
-//        } catch (BadCredentialsException e) { //throw if an authentication request is rejected
-//            throw new Exception("Invalid credentials");
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(
-//                new JwtResponse("Login Successfully", token, userDTO));
-//    }
-
     @PostMapping("/sign-in")
     public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInForm.getEmail(), signInForm.getPassword())
         );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication); // get authenticated User in local thread
         String token = jwtProvider.createToken(authentication);
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse("Login successfully", token , userPrincipal.getFirstName(), userPrincipal.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse("Login successfully", token , userPrincipal.getId(), userPrincipal.getFirstName(), userPrincipal.getAuthorities()));
     }
 
 }

@@ -1,6 +1,9 @@
 package com.cs3332.carEcommerce.DTOmodel.DTO;
 
+import com.cs3332.carEcommerce.entity.Role;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class UserDTO {
@@ -11,6 +14,6 @@ public class UserDTO {
     private String email;
     private String phone;
     private String avatar;
-    //private String role;
+    private Set<Role> roles;
 
 }

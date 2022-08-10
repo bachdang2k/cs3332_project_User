@@ -31,7 +31,7 @@ public class User {
     @Column(unique = true, length = 14)
     private String phone;
 
-    @JsonIgnore //when return request by json file, the file will hide password field
+    //@JsonIgnore //when return request by json file, the file will hide password field
     @Column(nullable = false, length = 150)
     private String password;
 

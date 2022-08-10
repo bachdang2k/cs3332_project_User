@@ -17,33 +17,18 @@ public class JwtResponse {
     private String message;
     private String token;
     private String type = "Bearer";
+    private Long id;
     private String name;
     private Collection<? extends GrantedAuthority> roles;
 
-    private Object data;
+//    private Object data;
 
-    public JwtResponse(String message, String token, String name, Collection<? extends GrantedAuthority> roles) {
+    public JwtResponse(String message, String token, Long id, String name, Collection<? extends GrantedAuthority> roles) {
         this.message = message;
         this.token = token;
+        this.id = id;
         this.name = name;
         this.roles = roles;
     }
-
-
-//    public JwtResponse(String message, String token, Object data) {
-//        this.message = message;
-//        this.token = token;
-//        this.data = data;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "ResponseJwt{" +
-//                ", massage='" + message + '\'' +
-//                ", token='" + token + '\'' +
-//                ", type='" + type + '\'' +
-//                ", data=" + data +
-//                '}';
-//    }
 
 }

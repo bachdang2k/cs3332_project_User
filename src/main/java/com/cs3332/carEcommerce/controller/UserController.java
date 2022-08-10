@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     //profile
-    @GetMapping(path = "/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'AUTHOR')")
     public ResponseEntity<ResponseObject> getUserByID(@PathVariable Long id) {
 
@@ -48,14 +49,14 @@ public class UserController {
 
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     @PreAuthorize("hasAnyAuthority('USER', 'AUTHOR')")
     public ResponseEntity<ResponseObject> updateUserByID(@RequestBody User newUser, @PathVariable Long id) {
 
-        User updatedUser = userService.updateUserByID(newUser, id);
+        User updateUser = updateUser = userService.updateUserByID(newUser, id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK", "Update User by ID Successful", updatedUser)
+                new ResponseObject("OK", "Update User by ID Successful", UserMapper.toUserDTO(updateUser))
         );
     }
 
