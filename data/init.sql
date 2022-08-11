@@ -11,7 +11,7 @@ INSERT INTO `cs3332_db`.`tbl_roles` (`id`, `role`) VALUES ('2', 'USER');
 INSERT INTO `cs3332_db`.`tbl_roles` (`id`, `role`) VALUES ('3', 'AUTHOR');
 
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE IF NOT EXISTS `users` (
                                       `id` INT NOT NULL AUTO_INCREMENT,
                                       `avatar` VARCHAR(100) DEFAULT NULL,
     `email` VARCHAR(45) NOT NULL,
